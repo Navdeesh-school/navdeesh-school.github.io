@@ -19,6 +19,7 @@
   var loadingTimeline = null;
   var autoFadeTimer = null;
   var volumeBeforeMute = 1.0;
+  var FIRST_VISIT_KEY = "navdeesh_portfolio_visited";
 
   /* ── DOM References ── */
   var $ = function (id) { return document.getElementById(id); };
@@ -321,6 +322,9 @@
     document.documentElement.style.overflow = "";
     document.body.style.overflow = "";
 
+    /* Mark experience as completed so it doesn't replay */
+    try { localStorage.setItem(FIRST_VISIT_KEY, "true"); } catch (e) {}
+
     autoFadeTimer = setTimeout(function () {
       if (!audio) return;
       userVolume = 0.007;
@@ -379,6 +383,9 @@
 
     document.documentElement.style.overflow = "";
     document.body.style.overflow = "";
+
+    /* Mark experience as completed so it doesn't replay */
+    try { localStorage.setItem(FIRST_VISIT_KEY, "true"); } catch (e) {}
 
     gsap.to(els.mainUI, {
       opacity: 1,
@@ -852,6 +859,24 @@
   }
 
   /* ═══════════════════════════════════════════════════
+     SKIP EXPERIENCE (returning visitor)
+     ═══════════════════════════════════════════════════ */
+
+  function showMainUIOnly() {
+    /* Hide all experience-related overlays immediately */
+    if (els.enterScreen)   els.enterScreen.style.display   = "none";
+    if (els.loadingScreen) els.loadingScreen.style.display = "none";
+    if (els.doorOverlay)   els.doorOverlay.style.display   = "none";
+    if (els.skipBtn)       els.skipBtn.style.display       = "none";
+
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
+
+    gsap.set(els.mainUI, { opacity: 1 });
+    animateSectionIn("home");
+  }
+
+  /* ═══════════════════════════════════════════════════
      INITIALIZATION
      ═══════════════════════════════════════════════════ */
 
@@ -860,14 +885,25 @@
     document.body.style.overflow = "hidden";
 
     initGrain();
-    initEnterScreen();
-    initSkipButton();
-    initAudioControls();
     initSidebar();
     initMobileMenu();
     initCarousels();
     initIndexLinks();
     initImageModal();
+
+    /* Check if this is a returning visitor */
+    var hasVisited = false;
+    try { hasVisited = localStorage.getItem(FIRST_VISIT_KEY) === "true"; } catch (e) {}
+
+    if (hasVisited) {
+      /* Returning visitor — skip the experience, show main UI directly */
+      showMainUIOnly();
+    } else {
+      /* First-time visitor — show the full cinematic experience */
+      initEnterScreen();
+      initSkipButton();
+      initAudioControls();
+    }
   }
 
   if (document.readyState === "loading") {
