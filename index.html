@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navdeesh — Portfolio</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='white'>N</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       GRAIN OVERLAY
+       ═══════════════════════════════════════════ -->
+  <div id="grain" class="portfolio-grain"></div>
+
+  <!-- ═══════════════════════════════════════════
+       ENTER SCREEN
+       ═══════════════════════════════════════════ -->
+  <div id="enterScreen" class="portfolio-enter">
+    <div style="position:relative;z-index:2;text-align:center;">
+      <div class="enter-text">Click anywhere to enter</div>
+      <div class="enter-subtext">Best experienced with audio</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       LOADING SCREEN
+       ═══════════════════════════════════════════ -->
+  <div id="loadingScreen" class="portfolio-loading">
+    <div class="loading-glow"></div>
+    <div style="position:relative;z-index:10;">
+      <span id="progressText" class="loading-percentage">0%</span>
+      <div class="progress-track">
+        <div id="progressBar" class="progress-fill"></div>
+        <div id="progressGlow" class="progress-glow" style="left:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       DOOR OVERLAY
+       ═══════════════════════════════════════════ -->
+  <div id="doorOverlay" class="door-overlay">
+    <div id="doorLight" class="door-light"></div>
+    <div id="doorLeft" class="door-panel door-panel-left">
+      <div class="door-surface"></div>
+    </div>
+    <div class="door-seam"></div>
+    <div id="doorRight" class="door-panel door-panel-right">
+      <div class="door-surface"></div>
+    </div>
+    <div id="doorShadowLeft" class="door-shadow-left"></div>
+    <div id="doorShadowRight" class="door-shadow-right"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SKIP EXPERIENCE BUTTON
+       ═══════════════════════════════════════════ -->
+  <div id="skipBtn" class="skip-experience">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+    <span>Skip experience</span>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       AUDIO CONTROLS
+       ═══════════════════════════════════════════ -->
+  <div id="audioControls" class="audio-controls">
+    <button id="muteBtn" class="audio-mute-btn" aria-label="Toggle mute">
+      <svg id="volumeOnIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+      <svg id="volumeOffIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+    </button>
+    <input id="volumeSlider" type="range" min="0" max="10" value="10" class="audio-volume-slider">
+    <button id="closeAudioBtn" class="audio-close-btn" aria-label="Stop music">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       MOBILE HEADER
+       ═══════════════════════════════════════════ -->
+  <div id="mobileHeader" class="mobile-header">
+    <div class="mobile-brand">NAVDEESH</div>
+    <div id="mobileMenuBtn" class="mobile-menu-btn">
+      <svg id="menuIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg id="closeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       MOBILE OVERLAY
+       ═══════════════════════════════════════════ -->
+  <div id="mobileOverlay" class="mobile-sidebar-overlay"></div>
+
+  <!-- ═══════════════════════════════════════════
+       MAIN UI
+       ═══════════════════════════════════════════ -->
+  <div id="mainUI" class="portfolio-main">
+
+    <!-- ── Sidebar ── -->
+    <aside id="sidebar" class="portfolio-sidebar">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-name">NAVDEESH</div>
+        <div class="sidebar-brand-sub">Class 10 Portfolio</div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-item sidebar-item-active" data-section="home">
+          <svg class="sidebar-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Home</span>
+        </div>
+        <div class="sidebar-item" data-section="english">
+          <svg class="sidebar-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <span>English</span>
+        </div>
+        <div class="sidebar-item" data-section="mathematics">
+          <svg class="sidebar-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><line x1="8" y1="10" x2="8" y2="10.01"/><line x1="12" y1="10" x2="12" y2="10.01"/><line x1="16" y1="10" x2="16" y2="10.01"/><line x1="8" y1="14" x2="8" y2="14.01"/><line x1="12" y1="14" x2="12" y2="14.01"/><line x1="8" y1="18" x2="8" y2="18.01"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>
+          <span>Mathematics</span>
+        </div>
+        <div class="sidebar-item" data-section="science">
+          <svg class="sidebar-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 9V3h4v6l5 8.5a2 2 0 0 1-1.7 3H6.7a2 2 0 0 1-1.7-3L10 9Z"/></svg>
+          <span>Science</span>
+        </div>
+        <div class="sidebar-item" data-section="social-science">
+          <svg class="sidebar-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          <span>Social Science</span>
+        </div>
+        <div class="sidebar-item" data-section="german">
+          <svg class="sidebar-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+          <span>German</span>
+        </div>
+        <div class="sidebar-item" data-section="information-technology">
+          <svg class="sidebar-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          <span>Information Technology</span>
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-footer-text">Tagore International School</div>
+        <div class="sidebar-footer-text" style="margin-top:4px;opacity:0.6;">Session 2026–2027</div>
+      </div>
+    </aside>
+
+    <!-- ── Content Area ── -->
+    <div id="contentArea" class="portfolio-content portfolio-scroll">
+      <div class="content-inner">
+        <div id="sectionWrapper">
+
+          <!-- ══════════ HOME SECTION ══════════ -->
+          <div id="section-home" class="section-container">
+
+            <div>
+              <div class="section-label">Student Profile</div>
+              <h1 class="profile-name">Navdeesh</h1>
+              <div class="profile-details">
+                10 — Tagore International School, East of Kailash<br>
+                New Delhi
+              </div>
+            </div>
+
+            <div class="profile-divider"></div>
+
+            <div style="margin-bottom:56px">
+              <div class="section-label">About</div>
+              <p class="about-text">Driven by discipline and a relentless pursuit of excellence, I am a Class 10 student with a deep passion for technology and innovation. My interests span across coding, artificial intelligence, and full-stack web development. I believe in the power of consistency, analytical thinking, and continuous learning to build solutions that make a real impact. Every line of code I write is a step toward mastering the craft of building meaningful digital experiences.</p>
+            </div>
+
+            <div style="margin-bottom:56px">
+              <div class="section-label">Skills</div>
+              <div style="margin-top:20px">
+                <div class="skills-group">
+                  <div class="skills-category">Programming</div>
+                  <div class="skills-list">
+                    <span class="skill-tag">Python (Primary Language)</span>
+                    <span class="skill-tag">Full Stack Web Development</span>
+                    <span class="skill-tag">HTML / CSS / JavaScript / TypeScript</span>
+                  </div>
+                </div>
+                <div class="skills-group">
+                  <div class="skills-category">Interests</div>
+                  <div class="skills-list">
+                    <span class="skill-tag">Artificial Intelligence & Machine Learning</span>
+                    <span class="skill-tag">Data Science & Analysis</span>
+                    <span class="skill-tag">Video Editing & Content Creation</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-bottom:56px">
+              <div class="section-label" style="margin-bottom:20px">Certificates</div>
+              <div class="carousel" data-carousel>
+                <div class="carousel-viewport">
+                  <div class="carousel-track">
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="cert-carousel-img" src="Certificates/Cash Prize.png" alt="Cash Prize Certificate" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Cash Prize — Awarded for outstanding performance and achievement in a competitive event</p>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="cert-carousel-img" src="Certificates/Cipher Flux.png" alt="Cipher Flux Certificate" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Cipher Flux — Certificate for participation and achievement in the Cipher Flux cybersecurity challenge</p>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="cert-carousel-img" src="Certificates/Hackzero Excelence.jpg" alt="Hackzero Excellence Certificate" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Hackzero Excellence — Recognized for excellence in the Hackzero hackathon competition</p>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="cert-carousel-img" src="Certificates/Kashi CTF Participation.png" alt="Kashi CTF Participation Certificate" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Kashi CTF Participation — Participated in the Kashi Capture The Flag cybersecurity competition</p>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="cert-carousel-img" src="Certificates/Kashi CTF.png" alt="Kashi CTF Achievement Certificate" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Kashi CTF Achievement — Recognized for exceptional performance in the Kashi CTF competition</p>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="cert-carousel-img" src="Certificates/Mythx Endgame Protocol.jpeg" alt="Mythx Endgame Protocol Certificate" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Mythx Endgame Protocol — Certificate of achievement in the Mythx Endgame Protocol challenge</p>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-arrow carousel-arrow-left" aria-label="Previous slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="carousel-arrow carousel-arrow-right" aria-label="Next slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="carousel-dots"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ══════════ ENGLISH SECTION ══════════ -->
+          <div id="section-english" class="section-container" style="display:none">
+            <div class="subject-header">
+              <div class="section-label">Subject Overview</div>
+              <div class="subject-name">English</div>
+              <span class="subject-grade-badge">Grade: A</span>
+            </div>
+
+            <!-- Index -->
+            <div class="subject-index">
+              <div class="section-label">Index</div>
+              <nav class="index-nav">
+                <a class="index-link" data-scroll="sub-art-english">Art Integration &amp; Holiday Homework</a>
+                <a class="index-link" data-scroll="sub-notebook-english">Notebook &amp; Remarks</a>
+                <a class="index-link" data-scroll="sub-tests-english">Weekly Test Marks</a>
+              </nav>
+            </div>
+
+            <!-- Art Integration & Holiday Homework -->
+            <div id="sub-art-english" class="subject-subsection">
+              <div class="section-label">Art Integration &amp; Holiday Homework</div>
+              <div class="carousel" data-carousel>
+                <div class="carousel-viewport">
+                  <div class="carousel-track">
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="art-integration-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Art Integration" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Description for this slide goes here...</p>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="art-integration-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Art Integration" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Description for this slide goes here...</p>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-arrow carousel-arrow-left" aria-label="Previous slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="carousel-arrow carousel-arrow-right" aria-label="Next slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="carousel-dots"></div>
+              </div>
+            </div>
+
+            <!-- Notebook & Remarks -->
+            <div id="sub-notebook-english" class="subject-subsection">
+              <div class="section-label">Notebook &amp; Remarks</div>
+              <div class="carousel" data-carousel>
+                <div class="carousel-viewport">
+                  <div class="carousel-track">
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-portrait">
+                        <img src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Notebook Image" loading="lazy">
+                      </div>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-portrait">
+                        <img src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Notebook Image" loading="lazy">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-arrow carousel-arrow-left" aria-label="Previous slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="carousel-arrow carousel-arrow-right" aria-label="Next slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="carousel-dots"></div>
+              </div>
+            </div>
+
+            <!-- Weekly Test Marks -->
+            <div id="sub-tests-english" class="subject-subsection">
+              <div class="section-label">Weekly Test Marks</div>
+              <div class="weekly-tests-grid">
+                <div class="weekly-test-card">
+                  <div class="weekly-test-title">Weekly Test 1</div>
+                  <div class="weekly-test-image">
+                    <img class="weekly-test-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Test Image" loading="lazy">
+                  </div>
+                  <div class="weekly-test-score">
+                    <span class="score-value">--</span>
+                    <span class="score-divider">/</span>
+                    <span class="score-total">35</span>
+                  </div>
+                </div>
+                <div class="weekly-test-card">
+                  <div class="weekly-test-title">Weekly Test 2</div>
+                  <div class="weekly-test-image">
+                    <img class="weekly-test-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Test Image" loading="lazy">
+                  </div>
+                  <div class="weekly-test-score">
+                    <span class="score-value">--</span>
+                    <span class="score-divider">/</span>
+                    <span class="score-total">35</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══════════ MATHEMATICS SECTION ══════════ -->
+          <div id="section-mathematics" class="section-container" style="display:none">
+            <div class="subject-header">
+              <div class="section-label">Subject Overview</div>
+              <div class="subject-name">Mathematics</div>
+              <span class="subject-grade-badge">Grade: A+</span>
+            </div>
+
+            <div class="subject-index">
+              <div class="section-label">Index</div>
+              <nav class="index-nav">
+                <a class="index-link" data-scroll="sub-art-mathematics">Art Integration &amp; Holiday Homework</a>
+                <a class="index-link" data-scroll="sub-notebook-mathematics">Notebook &amp; Remarks</a>
+                <a class="index-link" data-scroll="sub-tests-mathematics">Weekly Test Marks</a>
+              </nav>
+            </div>
+
+            <div id="sub-art-mathematics" class="subject-subsection">
+              <div class="section-label">Art Integration &amp; Holiday Homework</div>
+              <div class="carousel" data-carousel>
+                <div class="carousel-viewport">
+                  <div class="carousel-track">
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="art-integration-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Art Integration" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Description for this slide goes here...</p>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="art-integration-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Art Integration" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Description for this slide goes here...</p>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-arrow carousel-arrow-left" aria-label="Previous slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="carousel-arrow carousel-arrow-right" aria-label="Next slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="carousel-dots"></div>
+              </div>
+            </div>
+
+            <div id="sub-notebook-mathematics" class="subject-subsection">
+              <div class="section-label">Notebook &amp; Remarks</div>
+              <div class="carousel" data-carousel>
+                <div class="carousel-viewport">
+                  <div class="carousel-track">
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-portrait">
+                        <img src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Notebook Image" loading="lazy">
+                      </div>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-portrait">
+                        <img src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Notebook Image" loading="lazy">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-arrow carousel-arrow-left" aria-label="Previous slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="carousel-arrow carousel-arrow-right" aria-label="Next slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="carousel-dots"></div>
+              </div>
+            </div>
+
+            <div id="sub-tests-mathematics" class="subject-subsection">
+              <div class="section-label">Weekly Test Marks</div>
+              <div class="weekly-tests-grid">
+                <div class="weekly-test-card">
+                  <div class="weekly-test-title">Weekly Test 1</div>
+                  <div class="weekly-test-image">
+                    <img class="weekly-test-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Test Image" loading="lazy">
+                  </div>
+                  <div class="weekly-test-score">
+                    <span class="score-value">--</span>
+                    <span class="score-divider">/</span>
+                    <span class="score-total">35</span>
+                  </div>
+                </div>
+                <div class="weekly-test-card">
+                  <div class="weekly-test-title">Weekly Test 2</div>
+                  <div class="weekly-test-image">
+                    <img class="weekly-test-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Test Image" loading="lazy">
+                  </div>
+                  <div class="weekly-test-score">
+                    <span class="score-value">--</span>
+                    <span class="score-divider">/</span>
+                    <span class="score-total">35</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══════════ SCIENCE SECTION ══════════ -->
+          <div id="section-science" class="section-container" style="display:none">
+            <div class="subject-header">
+              <div class="section-label">Subject Overview</div>
+              <div class="subject-name">Science</div>
+              <span class="subject-grade-badge">Grade: A</span>
+            </div>
+
+            <div class="subject-index">
+              <div class="section-label">Index</div>
+              <nav class="index-nav">
+                <a class="index-link" data-scroll="sub-art-science">Art Integration &amp; Holiday Homework</a>
+                <a class="index-link" data-scroll="sub-notebook-science">Notebook &amp; Remarks</a>
+                <a class="index-link" data-scroll="sub-tests-science">Weekly Test Marks</a>
+              </nav>
+            </div>
+
+            <div id="sub-art-science" class="subject-subsection">
+              <div class="section-label">Art Integration &amp; Holiday Homework</div>
+              <div class="carousel" data-carousel>
+                <div class="carousel-viewport">
+                  <div class="carousel-track">
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="art-integration-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Art Integration" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Description for this slide goes here...</p>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="art-integration-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Art Integration" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Description for this slide goes here...</p>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-arrow carousel-arrow-left" aria-label="Previous slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="carousel-arrow carousel-arrow-right" aria-label="Next slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="carousel-dots"></div>
+              </div>
+            </div>
+
+            <div id="sub-notebook-science" class="subject-subsection">
+              <div class="section-label">Notebook &amp; Remarks</div>
+              <div class="carousel" data-carousel>
+                <div class="carousel-viewport">
+                  <div class="carousel-track">
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-portrait">
+                        <img src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Notebook Image" loading="lazy">
+                      </div>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-portrait">
+                        <img src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Notebook Image" loading="lazy">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-arrow carousel-arrow-left" aria-label="Previous slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="carousel-arrow carousel-arrow-right" aria-label="Next slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="carousel-dots"></div>
+              </div>
+            </div>
+
+            <div id="sub-tests-science" class="subject-subsection">
+              <div class="section-label">Weekly Test Marks</div>
+              <div class="weekly-tests-grid">
+                <div class="weekly-test-card">
+                  <div class="weekly-test-title">Weekly Test 1</div>
+                  <div class="weekly-test-image">
+                    <img class="weekly-test-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Test Image" loading="lazy">
+                  </div>
+                  <div class="weekly-test-score">
+                    <span class="score-value">--</span>
+                    <span class="score-divider">/</span>
+                    <span class="score-total">35</span>
+                  </div>
+                </div>
+                <div class="weekly-test-card">
+                  <div class="weekly-test-title">Weekly Test 2</div>
+                  <div class="weekly-test-image">
+                    <img class="weekly-test-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Test Image" loading="lazy">
+                  </div>
+                  <div class="weekly-test-score">
+                    <span class="score-value">--</span>
+                    <span class="score-divider">/</span>
+                    <span class="score-total">35</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══════════ SOCIAL SCIENCE SECTION ══════════ -->
+          <div id="section-social-science" class="section-container" style="display:none">
+            <div class="subject-header">
+              <div class="section-label">Subject Overview</div>
+              <div class="subject-name">Social Science</div>
+              <span class="subject-grade-badge">Grade: B+</span>
+            </div>
+
+            <div class="subject-index">
+              <div class="section-label">Index</div>
+              <nav class="index-nav">
+                <a class="index-link" data-scroll="sub-art-social-science">Art Integration &amp; Holiday Homework</a>
+                <a class="index-link" data-scroll="sub-notebook-social-science">Notebook &amp; Remarks</a>
+                <a class="index-link" data-scroll="sub-tests-social-science">Weekly Test Marks</a>
+              </nav>
+            </div>
+
+            <div id="sub-art-social-science" class="subject-subsection">
+              <div class="section-label">Art Integration &amp; Holiday Homework</div>
+              <div class="carousel" data-carousel>
+                <div class="carousel-viewport">
+                  <div class="carousel-track">
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="art-integration-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Art Integration" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Description for this slide goes here...</p>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="art-integration-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Art Integration" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Description for this slide goes here...</p>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-arrow carousel-arrow-left" aria-label="Previous slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="carousel-arrow carousel-arrow-right" aria-label="Next slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="carousel-dots"></div>
+              </div>
+            </div>
+
+            <div id="sub-notebook-social-science" class="subject-subsection">
+              <div class="section-label">Notebook &amp; Remarks</div>
+              <div class="carousel" data-carousel>
+                <div class="carousel-viewport">
+                  <div class="carousel-track">
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-portrait">
+                        <img src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Notebook Image" loading="lazy">
+                      </div>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-portrait">
+                        <img src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Notebook Image" loading="lazy">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-arrow carousel-arrow-left" aria-label="Previous slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="carousel-arrow carousel-arrow-right" aria-label="Next slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="carousel-dots"></div>
+              </div>
+            </div>
+
+            <div id="sub-tests-social-science" class="subject-subsection">
+              <div class="section-label">Weekly Test Marks</div>
+              <div class="weekly-tests-grid">
+                <div class="weekly-test-card">
+                  <div class="weekly-test-title">Weekly Test 1</div>
+                  <div class="weekly-test-image">
+                    <img class="weekly-test-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Test Image" loading="lazy">
+                  </div>
+                  <div class="weekly-test-score">
+                    <span class="score-value">--</span>
+                    <span class="score-divider">/</span>
+                    <span class="score-total">35</span>
+                  </div>
+                </div>
+                <div class="weekly-test-card">
+                  <div class="weekly-test-title">Weekly Test 2</div>
+                  <div class="weekly-test-image">
+                    <img class="weekly-test-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Test Image" loading="lazy">
+                  </div>
+                  <div class="weekly-test-score">
+                    <span class="score-value">--</span>
+                    <span class="score-divider">/</span>
+                    <span class="score-total">35</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══════════ GERMAN SECTION ══════════ -->
+          <div id="section-german" class="section-container" style="display:none">
+            <div class="subject-header">
+              <div class="section-label">Subject Overview</div>
+              <div class="subject-name">German</div>
+              <span class="subject-grade-badge">Grade: B+</span>
+            </div>
+
+            <div class="subject-index">
+              <div class="section-label">Index</div>
+              <nav class="index-nav">
+                <a class="index-link" data-scroll="sub-art-german">Art Integration &amp; Holiday Homework</a>
+                <a class="index-link" data-scroll="sub-notebook-german">Notebook &amp; Remarks</a>
+                <a class="index-link" data-scroll="sub-tests-german">Weekly Test Marks</a>
+              </nav>
+            </div>
+
+            <div id="sub-art-german" class="subject-subsection">
+              <div class="section-label">Art Integration &amp; Holiday Homework</div>
+              <div class="carousel" data-carousel>
+                <div class="carousel-viewport">
+                  <div class="carousel-track">
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="art-integration-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Art Integration" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Description for this slide goes here...</p>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="art-integration-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Art Integration" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Description for this slide goes here...</p>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-arrow carousel-arrow-left" aria-label="Previous slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="carousel-arrow carousel-arrow-right" aria-label="Next slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="carousel-dots"></div>
+              </div>
+            </div>
+
+            <div id="sub-notebook-german" class="subject-subsection">
+              <div class="section-label">Notebook &amp; Remarks</div>
+              <div class="carousel" data-carousel>
+                <div class="carousel-viewport">
+                  <div class="carousel-track">
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-portrait">
+                        <img src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Notebook Image" loading="lazy">
+                      </div>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-portrait">
+                        <img src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Notebook Image" loading="lazy">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-arrow carousel-arrow-left" aria-label="Previous slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="carousel-arrow carousel-arrow-right" aria-label="Next slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="carousel-dots"></div>
+              </div>
+            </div>
+
+            <div id="sub-tests-german" class="subject-subsection">
+              <div class="section-label">Weekly Test Marks</div>
+              <div class="weekly-tests-grid">
+                <div class="weekly-test-card">
+                  <div class="weekly-test-title">Weekly Test 1</div>
+                  <div class="weekly-test-image">
+                    <img class="weekly-test-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Test Image" loading="lazy">
+                  </div>
+                  <div class="weekly-test-score">
+                    <span class="score-value">--</span>
+                    <span class="score-divider">/</span>
+                    <span class="score-total">35</span>
+                  </div>
+                </div>
+                <div class="weekly-test-card">
+                  <div class="weekly-test-title">Weekly Test 2</div>
+                  <div class="weekly-test-image">
+                    <img class="weekly-test-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Test Image" loading="lazy">
+                  </div>
+                  <div class="weekly-test-score">
+                    <span class="score-value">--</span>
+                    <span class="score-divider">/</span>
+                    <span class="score-total">35</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══════════ INFORMATION TECHNOLOGY SECTION ══════════ -->
+          <div id="section-information-technology" class="section-container" style="display:none">
+            <div class="subject-header">
+              <div class="section-label">Subject Overview</div>
+              <div class="subject-name">Information Technology</div>
+              <span class="subject-grade-badge">Grade: A+</span>
+            </div>
+
+            <div class="subject-index">
+              <div class="section-label">Index</div>
+              <nav class="index-nav">
+                <a class="index-link" data-scroll="sub-art-information-technology">Art Integration &amp; Holiday Homework</a>
+                <a class="index-link" data-scroll="sub-notebook-information-technology">Notebook &amp; Remarks</a>
+                <a class="index-link" data-scroll="sub-tests-information-technology">Weekly Test Marks</a>
+              </nav>
+            </div>
+
+            <div id="sub-art-information-technology" class="subject-subsection">
+              <div class="section-label">Art Integration &amp; Holiday Homework</div>
+              <div class="carousel" data-carousel>
+                <div class="carousel-viewport">
+                  <div class="carousel-track">
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="art-integration-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Art Integration" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Description for this slide goes here...</p>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="art-integration-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Art Integration" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Description for this slide goes here...</p>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-arrow carousel-arrow-left" aria-label="Previous slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="carousel-arrow carousel-arrow-right" aria-label="Next slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="carousel-dots"></div>
+              </div>
+            </div>
+
+            <div id="sub-notebook-information-technology" class="subject-subsection">
+              <div class="section-label">Notebook &amp; Remarks</div>
+              <div class="carousel" data-carousel>
+                <div class="carousel-viewport">
+                  <div class="carousel-track">
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-portrait">
+                        <img src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Notebook Image" loading="lazy">
+                      </div>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-portrait">
+                        <img src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Notebook Image" loading="lazy">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-arrow carousel-arrow-left" aria-label="Previous slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="carousel-arrow carousel-arrow-right" aria-label="Next slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="carousel-dots"></div>
+              </div>
+            </div>
+
+            <div id="sub-tests-information-technology" class="subject-subsection">
+              <div class="section-label">Weekly Test Marks</div>
+              <div class="weekly-tests-grid weekly-tests-grid-single">
+                <div class="weekly-test-card">
+                  <div class="weekly-test-title">Weekly Test</div>
+                  <div class="weekly-test-image">
+                    <img class="weekly-test-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Test Image" loading="lazy">
+                  </div>
+                  <div class="weekly-test-score">
+                    <span class="score-value">--</span>
+                    <span class="score-divider">/</span>
+                    <span class="score-total">35</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       IMAGE MODAL
+       ═══════════════════════════════════════════ -->
+  <div id="imageModal" class="image-modal">
+    <div class="image-modal-backdrop"></div>
+    <div class="image-modal-content">
+      <button class="image-modal-close" aria-label="Close modal">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="image-modal-img-wrapper">
+        <img id="modalImage" class="image-modal-img" src="" alt="Preview">
+      </div>
+      <p id="modalCaption" class="image-modal-caption"></p>
+    </div>
+  </div>
+
+  <!-- GSAP from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
