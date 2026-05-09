@@ -606,12 +606,12 @@
         currentIndex = index;
         isAnimating = true;
 
-        /* Calculate offset percentage based on viewport width */
-        var viewportWidth = viewport.offsetWidth;
-        var offset = -(currentIndex * viewportWidth);
+        /* Use sub-pixel precise slide width to avoid cumulative rounding */
+        var slideWidth = slides[0].getBoundingClientRect().width;
+        var offset = -(currentIndex * slideWidth);
 
         gsap.to(track, {
-          x: offset + "px",
+          x: offset,
           duration: 0.4,
           ease: "power2.out",
           onComplete: function () {
@@ -699,9 +699,9 @@
       window.addEventListener("resize", function () {
         if (resizeTimer) clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function () {
-          var viewportWidth = viewport.offsetWidth;
-          var offset = -(currentIndex * viewportWidth);
-          gsap.set(track, { x: offset + "px" });
+          var slideWidth = slides[0].getBoundingClientRect().width;
+          var offset = -(currentIndex * slideWidth);
+          gsap.set(track, { x: offset });
         }, 150);
       });
     });
@@ -809,6 +809,23 @@
       img.addEventListener("click", function (e) {
         e.stopPropagation();
         /* Find the sibling carousel-caption for description */
+        var slide = img.closest(".carousel-slide");
+        var caption = "";
+        if (slide) {
+          var capEl = slide.querySelector(".carousel-caption");
+          if (capEl) {
+            caption = capEl.textContent.trim();
+          }
+        }
+        openModal(img.src, caption);
+      });
+    });
+
+    /* Attach click handlers to certificate carousel images */
+    var certImgs = document.querySelectorAll(".cert-carousel-img");
+    certImgs.forEach(function (img) {
+      img.addEventListener("click", function (e) {
+        e.stopPropagation();
         var slide = img.closest(".carousel-slide");
         var caption = "";
         if (slide) {

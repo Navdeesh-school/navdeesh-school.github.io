@@ -739,7 +739,9 @@ body {
 
 .carousel-slide {
   min-width: 100%;
+  width: 0;
   flex-shrink: 0;
+  overflow: hidden;
 }
 
 .carousel-media {
@@ -762,6 +764,18 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.art-integration-img,
+.cert-carousel-img {
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.art-integration-img:hover,
+.cert-carousel-img:hover {
+  transform: scale(1.02);
+  filter: brightness(1.1);
 }
 
 .carousel-caption {
