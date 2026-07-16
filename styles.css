@@ -427,10 +427,7 @@ body {
 }
 
 .sidebar-chevron {
-  margin-left: auto;
-  transition: transform 0.35s ease;
-  opacity: 0.4;
-  flex-shrink: 0;
+  display: none;
 }
 
 .sidebar-chevron-open {
@@ -439,8 +436,7 @@ body {
 
 .sidebar-children {
   overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  max-height: 160px;
 }
 
 .sidebar-children-open {
