@@ -527,8 +527,64 @@
   }
 
   /* ═══════════════════════════════════════════════════
-     MOBILE MENU
-     ═══════════════════════════════════════════════════ */
+      SCIENCE DROPDOWN IN SIDEBAR
+      ═══════════════════════════════════════════════════ */
+
+  function initScienceDropdown() {
+    var scienceItem = document.querySelector('.sidebar-has-children');
+    var childrenEl = scienceItem ? scienceItem.nextElementSibling : null;
+    var chevron = scienceItem ? scienceItem.querySelector('.sidebar-chevron') : null;
+
+    if (!scienceItem || !childrenEl || !childrenEl.classList.contains('sidebar-children')) return;
+
+    function setDropdown(open) {
+      childrenEl.classList.toggle('sidebar-children-open', open);
+      if (chevron) chevron.classList.toggle('sidebar-chevron-open', open);
+    }
+
+    function closeDropdown() {
+      setDropdown(false);
+    }
+
+    scienceItem.addEventListener('click', function () {
+      var isOpen = childrenEl.classList.contains('sidebar-children-open');
+      setDropdown(!isOpen);
+    });
+
+    /* Event delegation: close on any click inside children (sub-subject or gap) */
+    childrenEl.addEventListener('click', function (e) {
+      var child = e.target.closest('.sidebar-item');
+      if (child) closeDropdown();
+    });
+
+    /* Close when any non-science sidebar item is clicked while dropdown is open */
+    document.querySelectorAll('.sidebar-item').forEach(function (item) {
+      var sec = item.getAttribute('data-section');
+      if (sec && sec !== 'science') {
+        item.addEventListener('click', closeDropdown);
+      }
+    });
+  }
+
+  /* ═══════════════════════════════════════════════════
+      SCIENCE CARDS → SUB-SUBJECT NAVIGATION
+      ═══════════════════════════════════════════════════ */
+
+  function initScienceCards() {
+    var cards = document.querySelectorAll('.science-card[data-section]');
+    cards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        var sectionId = card.getAttribute('data-section');
+        if (sectionId) {
+          switchSection(sectionId);
+        }
+      });
+    });
+  }
+
+  /* ═══════════════════════════════════════════════════
+      MOBILE MENU
+      ═══════════════════════════════════════════════════ */
 
   function openMobileMenu() {
     mobileOpen = true;
@@ -903,6 +959,8 @@
 
     initGrain();
     initSidebar();
+    initScienceDropdown();
+    initScienceCards();
     initMobileMenu();
     initCarousels();
     initIndexLinks();
