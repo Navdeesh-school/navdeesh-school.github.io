@@ -119,9 +119,21 @@
           <svg class="sidebar-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><line x1="8" y1="10" x2="8" y2="10.01"/><line x1="12" y1="10" x2="12" y2="10.01"/><line x1="16" y1="10" x2="16" y2="10.01"/><line x1="8" y1="14" x2="8" y2="14.01"/><line x1="12" y1="14" x2="12" y2="14.01"/><line x1="8" y1="18" x2="8" y2="18.01"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>
           <span>Mathematics</span>
         </div>
-        <div class="sidebar-item" data-section="science">
+        <div class="sidebar-item sidebar-has-children" data-section="science">
           <svg class="sidebar-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 9V3h4v6l5 8.5a2 2 0 0 1-1.7 3H6.7a2 2 0 0 1-1.7-3L10 9Z"/></svg>
           <span>Science</span>
+          <svg class="sidebar-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="sidebar-children">
+          <div class="sidebar-item sidebar-child-item" data-section="physics">
+            <span style="margin-left:32px;">Physics</span>
+          </div>
+          <div class="sidebar-item sidebar-child-item" data-section="chemistry">
+            <span style="margin-left:32px;">Chemistry</span>
+          </div>
+          <div class="sidebar-item sidebar-child-item" data-section="biology">
+            <span style="margin-left:32px;">Biology</span>
+          </div>
         </div>
         <div class="sidebar-item" data-section="social-science">
           <svg class="sidebar-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
@@ -234,6 +246,12 @@
                         <img class="cert-carousel-img" src="Certificates/Breach@trix.png" alt="Breach@trix Certificate" loading="lazy">
                       </div>
                       <p class="carousel-caption">Breach@trix — Awarded for exceptional problem-solving and technical skills in the Breach@trix cybersecurity competition</p>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="cert-carousel-img" src="Certificates/Event Horizon.png" alt="Event Horizon Certificate" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Event Horizon — Recognized for achievement in the Event Horizon cybersecurity challenge</p>
                     </div>
                   </div>
                 </div>
@@ -457,24 +475,73 @@
             </div>
           </div>
 
-          <!-- ══════════ SCIENCE SECTION ══════════ -->
+          <!-- ══════════ SCIENCE SECTION (overview) ══════════ -->
           <div id="section-science" class="section-container" style="display:none">
             <div class="subject-header">
               <div class="section-label">Subject Overview</div>
               <div class="subject-name">Science</div>
               <span class="subject-grade-badge">Grade: A</span>
             </div>
+            <div class="science-cards">
+              <div class="science-card" data-section="physics">
+                <div class="science-card-icon">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3" fill="currentColor" opacity="0.3"/>
+                    <ellipse cx="12" cy="12" rx="10" ry="3.5" transform="rotate(0 12 12)"/>
+                    <ellipse cx="12" cy="12" rx="10" ry="3.5" transform="rotate(60 12 12)"/>
+                    <ellipse cx="12" cy="12" rx="10" ry="3.5" transform="rotate(120 12 12)"/>
+                  </svg>
+                </div>
+                <div class="science-card-name">Physics</div>
+                <div class="science-card-desc">Laws of motion, energy, electricity, and the fundamental forces shaping our universe</div>
+                <div class="science-card-btn">Open →</div>
+              </div>
+              <div class="science-card" data-section="chemistry">
+                <div class="science-card-icon">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 3h6"/><path d="M10 9h4"/>
+                    <path d="M10 3v6l-5 8.5a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3L14 9V3"/>
+                    <path d="M7.5 16h9"/><path d="M8 19h8"/>
+                  </svg>
+                </div>
+                <div class="science-card-name">Chemistry</div>
+                <div class="science-card-desc">Chemical reactions, elements, compounds, and the molecular world around us</div>
+                <div class="science-card-btn">Open →</div>
+              </div>
+              <div class="science-card" data-section="biology">
+                <div class="science-card-icon">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4c4 4 12 12 16 16"/>
+                    <path d="M20 4c-4 4-12 12-16 16"/>
+                    <circle cx="9.5" cy="7.5" r="1.5" fill="currentColor" opacity="0.4"/>
+                    <circle cx="14.5" cy="16.5" r="1.5" fill="currentColor" opacity="0.4"/>
+                    <circle cx="14.5" cy="7.5" r="1.5" fill="currentColor" opacity="0.4"/>
+                    <circle cx="9.5" cy="16.5" r="1.5" fill="currentColor" opacity="0.4"/>
+                  </svg>
+                </div>
+                <div class="science-card-name">Biology</div>
+                <div class="science-card-desc">Life processes, cells, genetics, and the incredible diversity of living organisms</div>
+                <div class="science-card-btn">Open →</div>
+              </div>
+            </div>
+          </div>
 
+          <!-- ══════════ PHYSICS SECTION ══════════ -->
+          <div id="section-physics" class="section-container" style="display:none">
+            <div class="subject-header">
+              <div class="section-label">Subject Overview</div>
+              <div class="subject-name">Physics</div>
+              <span class="subject-grade-badge">Grade: A</span>
+            </div>
             <div class="subject-index">
               <div class="section-label">Index</div>
               <nav class="index-nav">
-                <a class="index-link" data-scroll="sub-art-science">Art Integration &amp; Holiday Homework</a>
-                <a class="index-link" data-scroll="sub-notebook-science">Notebook &amp; Remarks</a>
-                <a class="index-link" data-scroll="sub-tests-science">Weekly Test Marks</a>
+                <a class="index-link" data-scroll="sub-art-physics">Art Integration &amp; Holiday Homework</a>
+                <a class="index-link" data-scroll="sub-notebook-physics">Notebook &amp; Remarks</a>
+                <a class="index-link" data-scroll="sub-tests-physics">Weekly Test Marks</a>
               </nav>
             </div>
-
-            <div id="sub-art-science" class="subject-subsection">
+            <div id="sub-art-physics" class="subject-subsection">
               <div class="section-label">Art Integration &amp; Holiday Homework</div>
               <div class="carousel" data-carousel>
                 <div class="carousel-viewport">
@@ -502,8 +569,7 @@
                 <div class="carousel-dots"></div>
               </div>
             </div>
-
-            <div id="sub-notebook-science" class="subject-subsection">
+            <div id="sub-notebook-physics" class="subject-subsection">
               <div class="section-label">Notebook &amp; Remarks</div>
               <div class="carousel" data-carousel>
                 <div class="carousel-viewport">
@@ -529,8 +595,203 @@
                 <div class="carousel-dots"></div>
               </div>
             </div>
+            <div id="sub-tests-physics" class="subject-subsection">
+              <div class="section-label">Weekly Test Marks</div>
+              <div class="weekly-tests-grid">
+                <div class="weekly-test-card">
+                  <div class="weekly-test-title">Weekly Test 1</div>
+                  <div class="weekly-test-image">
+                    <img class="weekly-test-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Test Image" loading="lazy">
+                  </div>
+                  <div class="weekly-test-score">
+                    <span class="score-value">--</span>
+                    <span class="score-divider">/</span>
+                    <span class="score-total">35</span>
+                  </div>
+                </div>
+                <div class="weekly-test-card">
+                  <div class="weekly-test-title">Weekly Test 2</div>
+                  <div class="weekly-test-image">
+                    <img class="weekly-test-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Test Image" loading="lazy">
+                  </div>
+                  <div class="weekly-test-score">
+                    <span class="score-value">--</span>
+                    <span class="score-divider">/</span>
+                    <span class="score-total">35</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <div id="sub-tests-science" class="subject-subsection">
+          <!-- ══════════ CHEMISTRY SECTION ══════════ -->
+          <div id="section-chemistry" class="section-container" style="display:none">
+            <div class="subject-header">
+              <div class="section-label">Subject Overview</div>
+              <div class="subject-name">Chemistry</div>
+              <span class="subject-grade-badge">Grade: A</span>
+            </div>
+            <div class="subject-index">
+              <div class="section-label">Index</div>
+              <nav class="index-nav">
+                <a class="index-link" data-scroll="sub-art-chemistry">Art Integration &amp; Holiday Homework</a>
+                <a class="index-link" data-scroll="sub-notebook-chemistry">Notebook &amp; Remarks</a>
+                <a class="index-link" data-scroll="sub-tests-chemistry">Weekly Test Marks</a>
+              </nav>
+            </div>
+            <div id="sub-art-chemistry" class="subject-subsection">
+              <div class="section-label">Art Integration &amp; Holiday Homework</div>
+              <div class="carousel" data-carousel>
+                <div class="carousel-viewport">
+                  <div class="carousel-track">
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="art-integration-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Art Integration" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Description for this slide goes here...</p>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="art-integration-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Art Integration" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Description for this slide goes here...</p>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-arrow carousel-arrow-left" aria-label="Previous slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="carousel-arrow carousel-arrow-right" aria-label="Next slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="carousel-dots"></div>
+              </div>
+            </div>
+            <div id="sub-notebook-chemistry" class="subject-subsection">
+              <div class="section-label">Notebook &amp; Remarks</div>
+              <div class="carousel" data-carousel>
+                <div class="carousel-viewport">
+                  <div class="carousel-track">
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-portrait">
+                        <img src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Notebook Image" loading="lazy">
+                      </div>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-portrait">
+                        <img src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Notebook Image" loading="lazy">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-arrow carousel-arrow-left" aria-label="Previous slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="carousel-arrow carousel-arrow-right" aria-label="Next slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="carousel-dots"></div>
+              </div>
+            </div>
+            <div id="sub-tests-chemistry" class="subject-subsection">
+              <div class="section-label">Weekly Test Marks</div>
+              <div class="weekly-tests-grid">
+                <div class="weekly-test-card">
+                  <div class="weekly-test-title">Weekly Test 1</div>
+                  <div class="weekly-test-image">
+                    <img class="weekly-test-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Test Image" loading="lazy">
+                  </div>
+                  <div class="weekly-test-score">
+                    <span class="score-value">--</span>
+                    <span class="score-divider">/</span>
+                    <span class="score-total">35</span>
+                  </div>
+                </div>
+                <div class="weekly-test-card">
+                  <div class="weekly-test-title">Weekly Test 2</div>
+                  <div class="weekly-test-image">
+                    <img class="weekly-test-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Test Image" loading="lazy">
+                  </div>
+                  <div class="weekly-test-score">
+                    <span class="score-value">--</span>
+                    <span class="score-divider">/</span>
+                    <span class="score-total">35</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══════════ BIOLOGY SECTION ══════════ -->
+          <div id="section-biology" class="section-container" style="display:none">
+            <div class="subject-header">
+              <div class="section-label">Subject Overview</div>
+              <div class="subject-name">Biology</div>
+              <span class="subject-grade-badge">Grade: A</span>
+            </div>
+            <div class="subject-index">
+              <div class="section-label">Index</div>
+              <nav class="index-nav">
+                <a class="index-link" data-scroll="sub-art-biology">Art Integration &amp; Holiday Homework</a>
+                <a class="index-link" data-scroll="sub-notebook-biology">Notebook &amp; Remarks</a>
+                <a class="index-link" data-scroll="sub-tests-biology">Weekly Test Marks</a>
+              </nav>
+            </div>
+            <div id="sub-art-biology" class="subject-subsection">
+              <div class="section-label">Art Integration &amp; Holiday Homework</div>
+              <div class="carousel" data-carousel>
+                <div class="carousel-viewport">
+                  <div class="carousel-track">
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="art-integration-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Art Integration" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Description for this slide goes here...</p>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-wide">
+                        <img class="art-integration-img" src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Art Integration" loading="lazy">
+                      </div>
+                      <p class="carousel-caption">Description for this slide goes here...</p>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-arrow carousel-arrow-left" aria-label="Previous slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="carousel-arrow carousel-arrow-right" aria-label="Next slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="carousel-dots"></div>
+              </div>
+            </div>
+            <div id="sub-notebook-biology" class="subject-subsection">
+              <div class="section-label">Notebook &amp; Remarks</div>
+              <div class="carousel" data-carousel>
+                <div class="carousel-viewport">
+                  <div class="carousel-track">
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-portrait">
+                        <img src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Notebook Image" loading="lazy">
+                      </div>
+                    </div>
+                    <div class="carousel-slide">
+                      <div class="carousel-media carousel-media-portrait">
+                        <img src="https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg" alt="Notebook Image" loading="lazy">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-arrow carousel-arrow-left" aria-label="Previous slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="carousel-arrow carousel-arrow-right" aria-label="Next slide">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="carousel-dots"></div>
+              </div>
+            </div>
+            <div id="sub-tests-biology" class="subject-subsection">
               <div class="section-label">Weekly Test Marks</div>
               <div class="weekly-tests-grid">
                 <div class="weekly-test-card">
