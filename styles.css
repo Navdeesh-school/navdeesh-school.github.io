@@ -1080,6 +1080,62 @@ body {
   max-width: 420px;
 }
 
+/* Weekly marks table (home) */
+
+.weekly-marks-wrap {
+  margin-top: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.weekly-marks-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.weekly-marks-table th {
+  font-size: 0.65rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 500;
+  text-align: left;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.weekly-marks-table th:not(.marks-subject-col) {
+  text-align: center;
+}
+
+.weekly-marks-table td {
+  padding: 12px 20px;
+  color: rgba(255, 255, 255, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.weekly-marks-table td.marks-subject {
+  text-align: left;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+
+.weekly-marks-table tr:last-child td {
+  border-bottom: none;
+}
+
+.weekly-marks-table .marks-empty {
+  color: rgba(255, 255, 255, 0.2);
+}
+
 .weekly-test-card {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -1700,6 +1756,15 @@ body {
 
   .subject-name {
     font-size: 1.4rem;
+  }
+
+  .weekly-marks-table {
+    font-size: 0.75rem;
+  }
+
+  .weekly-marks-table th,
+  .weekly-marks-table td {
+    padding: 12px 14px;
   }
 
   .sidebar-item {
