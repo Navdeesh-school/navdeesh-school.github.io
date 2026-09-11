@@ -1171,6 +1171,14 @@ body {
   display: block;
 }
 
+.weekly-test-note {
+  font-size: 0.7rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
 .weekly-test-score {
   display: flex;
   align-items: baseline;
@@ -2023,6 +2031,22 @@ body {
 .weekly-test-img {
   cursor: zoom-in;
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), filter 0.35s ease;
+}
+
+.art-integration-video {
+  background: #000;
+}
+
+.carousel-caption a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  word-break: break-all;
+  transition: color 0.25s ease;
+}
+
+.carousel-caption a:hover {
+  color: #ffffff;
 }
 
 .art-integration-img:hover,
