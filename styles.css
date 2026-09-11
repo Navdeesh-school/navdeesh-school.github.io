@@ -487,6 +487,32 @@ body {
   letter-spacing: 1px;
 }
 
+.sidebar-social {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 0.65rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sidebar-social:hover {
+  color: #ffffff;
+}
+
+.sidebar-social svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
 /* ═══════════════════════════════════════════
    CONTENT AREA
    ═══════════════════════════════════════════ */
