@@ -859,7 +859,11 @@
         togglePlay();
       });
       video.addEventListener("click", togglePlay);
-      video.addEventListener("play", updatePlayUI);
+      video.addEventListener("play", function () {
+        updatePlayUI();
+        /* Stop the experience BGM so it never overlaps video audio */
+        stopAudio();
+      });
       video.addEventListener("pause", updatePlayUI);
       video.addEventListener("ended", updatePlayUI);
 
