@@ -622,6 +622,14 @@
       var totalSlides  = slides.length;
       var isAnimating  = false;
 
+      /* ── Single slide: navigation arrows and dots serve no purpose ── */
+      if (totalSlides <= 1) {
+        if (prevBtn) prevBtn.style.display = "none";
+        if (nextBtn) nextBtn.style.display = "none";
+        if (dotsBox) dotsBox.style.display = "none";
+        return;
+      }
+
       /* ── Generate dots ── */
       if (dotsBox) {
         for (var i = 0; i < totalSlides; i++) {
