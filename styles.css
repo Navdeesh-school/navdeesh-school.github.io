@@ -2084,3 +2084,264 @@ body {
     padding: 0 20px;
   }
 }
+
+/* ═══════════════════════════════════════════
+   CUSTOM VIDEO PLAYER
+   Themed controls for site videos
+   ═══════════════════════════════════════════ */
+
+.custom-video {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  overflow: hidden;
+}
+
+.custom-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.custom-video:fullscreen video {
+  object-fit: contain;
+}
+
+/* ── Center play button (visible while paused) ── */
+
+.cv-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 0 0 0 3px;
+  z-index: 3;
+  transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.cv-center:hover {
+  background: rgba(0, 0, 0, 0.75);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+.custom-video:not(.cv-paused) .cv-center {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.8);
+}
+
+/* ── Bottom control bar ── */
+
+.cv-controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 30px 14px 10px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.78) 0%, transparent 100%);
+  z-index: 4;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.custom-video.cv-idle .cv-controls {
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+}
+
+.custom-video.cv-idle {
+  cursor: none;
+}
+
+.cv-btn {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cv-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.cv-btn:active {
+  transform: scale(0.9);
+}
+
+.cv-btn:focus-visible,
+.cv-center:focus-visible,
+.cv-progress:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+/* ── Progress / seek bar ── */
+
+.cv-progress {
+  flex: 1;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.cv-track {
+  position: relative;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  transition: height 0.2s ease;
+}
+
+.cv-progress:hover .cv-track {
+  height: 5px;
+}
+
+.cv-buffered,
+.cv-played {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  border-radius: 2px;
+}
+
+.cv-buffered {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.cv-played {
+  background: #ffffff;
+}
+
+.cv-played::after {
+  content: "";
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.cv-progress:hover .cv-played::after {
+  opacity: 1;
+}
+
+/* ── Time display ── */
+
+.cv-time {
+  font-size: 0.65rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.cv-sep {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* ── Volume slider ── */
+
+.cv-volume {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 70px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.cv-volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.cv-volume::-webkit-slider-thumb:hover {
+  background: #ffffff;
+  transform: scale(1.2);
+}
+
+.cv-volume::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .cv-volume {
+    display: none;
+  }
+
+  .cv-center {
+    width: 56px;
+    height: 56px;
+  }
+
+  .cv-controls {
+    gap: 6px;
+    padding: 26px 10px 8px;
+  }
+
+  .cv-time {
+    font-size: 0.6rem;
+  }
+}

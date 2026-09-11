@@ -407,6 +407,10 @@
   function switchSection(sectionId) {
     if (sectionId === activeSection || isTransitioning) return;
 
+    /* Pause any playing custom videos so audio doesn't follow navigation */
+    var vids = document.querySelectorAll("[data-custom-video] video");
+    vids.forEach(function (v) { v.pause(); });
+
     isTransitioning = true;
 
     if (els.contentArea) els.contentArea.scrollTop = 0;
@@ -740,6 +744,240 @@
   }
 
   /* ═══════════════════════════════════════════════════
+     CUSTOM VIDEO PLAYER
+     Themed controls: play/pause, seek, volume, fullscreen
+     ═══════════════════════════════════════════════════ */
+
+  function initCustomVideos() {
+    var players = document.querySelectorAll("[data-custom-video]");
+
+    players.forEach(function (player) {
+      var video       = player.querySelector("video");
+      var controls    = player.querySelector(".cv-controls");
+      var playBtn     = player.querySelector(".cv-play");
+      var iconPlay    = player.querySelector(".cv-icon-play");
+      var iconPause   = player.querySelector(".cv-icon-pause");
+      var centerBtn   = player.querySelector(".cv-center");
+      var progress    = player.querySelector(".cv-progress");
+      var playedBar   = player.querySelector(".cv-played");
+      var bufferedBar = player.querySelector(".cv-buffered");
+      var currentEl   = player.querySelector(".cv-current");
+      var durationEl  = player.querySelector(".cv-duration");
+      var muteBtn     = player.querySelector(".cv-mute");
+      var iconVol     = player.querySelector(".cv-icon-vol");
+      var iconMuted   = player.querySelector(".cv-icon-muted");
+      var volSlider   = player.querySelector(".cv-volume");
+      var fullBtn     = player.querySelector(".cv-full");
+      var iconExpand  = player.querySelector(".cv-icon-expand");
+      var iconCompress = player.querySelector(".cv-icon-compress");
+
+      if (!video) return;
+
+      var scrubbing = false;
+      var idleTimer = null;
+
+      function fmt(s) {
+        s = Math.max(0, Math.floor(s || 0));
+        var m = Math.floor(s / 60);
+        var sec = s % 60;
+        return m + ":" + (sec < 10 ? "0" : "") + sec;
+      }
+
+      function showControls() {
+        player.classList.remove("cv-idle");
+        if (idleTimer) {
+          clearTimeout(idleTimer);
+          idleTimer = null;
+        }
+      }
+
+      function scheduleHide() {
+        showControls();
+        if (idleTimer) clearTimeout(idleTimer);
+        idleTimer = setTimeout(function () {
+          if (!video.paused && !video.ended) player.classList.add("cv-idle");
+        }, 2800);
+      }
+
+      function updatePlayUI() {
+        var playing = !video.paused && !video.ended;
+        player.classList.toggle("cv-paused", !playing);
+        if (iconPlay)  iconPlay.style.display  = playing ? "none" : "block";
+        if (iconPause) iconPause.style.display = playing ? "block" : "none";
+        if (playing) scheduleHide();
+        else showControls();
+      }
+
+      function togglePlay() {
+        if (video.paused || video.ended) {
+          if (video.ended) video.currentTime = 0;
+          var p = video.play();
+          if (p) p.catch(function () {});
+        } else {
+          video.pause();
+        }
+      }
+
+      function updateProgress() {
+        if (video.duration) {
+          playedBar.style.width = (video.currentTime / video.duration * 100) + "%";
+          progress.setAttribute("aria-valuenow", Math.round(video.currentTime));
+        }
+        currentEl.textContent = fmt(video.currentTime);
+      }
+
+      function seekFromEvent(e) {
+        var rect = progress.getBoundingClientRect();
+        var x = (e.clientX - rect.left) / rect.width;
+        x = Math.min(1, Math.max(0, x));
+        if (video.duration) video.currentTime = x * video.duration;
+        updateProgress();
+      }
+
+      function updateVolUI() {
+        var muted = video.muted || video.volume === 0;
+        if (iconVol)   iconVol.style.display   = muted ? "none" : "block";
+        if (iconMuted) iconMuted.style.display = muted ? "block" : "none";
+        if (volSlider) volSlider.value = video.muted ? 0 : Math.round(video.volume * 100);
+      }
+
+      /* ── Play / pause ── */
+      if (playBtn) playBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        togglePlay();
+      });
+      if (centerBtn) centerBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        togglePlay();
+      });
+      video.addEventListener("click", togglePlay);
+      video.addEventListener("play", updatePlayUI);
+      video.addEventListener("pause", updatePlayUI);
+      video.addEventListener("ended", updatePlayUI);
+
+      /* ── Progress + time ── */
+      video.addEventListener("timeupdate", function () {
+        if (!scrubbing) updateProgress();
+      });
+      video.addEventListener("loadedmetadata", function () {
+        durationEl.textContent = fmt(video.duration);
+        progress.setAttribute("aria-valuemax", Math.round(video.duration));
+        updateProgress();
+      });
+      video.addEventListener("progress", function () {
+        try {
+          if (video.buffered.length && video.duration) {
+            bufferedBar.style.width =
+              (video.buffered.end(video.buffered.length - 1) / video.duration * 100) + "%";
+          }
+        } catch (err) {}
+      });
+
+      /* ── Seek: click + drag (pointer events cover mouse + touch) ── */
+      if (progress) {
+        progress.addEventListener("pointerdown", function (e) {
+          scrubbing = true;
+          try { progress.setPointerCapture(e.pointerId); } catch (err) {}
+          seekFromEvent(e);
+          showControls();
+        });
+        progress.addEventListener("pointermove", function (e) {
+          if (scrubbing) seekFromEvent(e);
+        });
+        progress.addEventListener("pointerup", function (e) {
+          if (scrubbing) {
+            seekFromEvent(e);
+            scrubbing = false;
+            scheduleHide();
+          }
+        });
+        progress.addEventListener("pointercancel", function () {
+          scrubbing = false;
+        });
+        progress.addEventListener("keydown", function (e) {
+          if (!video.duration) return;
+          if (e.key === "ArrowRight") {
+            video.currentTime = Math.min(video.duration, video.currentTime + 5);
+            e.preventDefault();
+          } else if (e.key === "ArrowLeft") {
+            video.currentTime = Math.max(0, video.currentTime - 5);
+            e.preventDefault();
+          } else if (e.key === "Home") {
+            video.currentTime = 0;
+            e.preventDefault();
+          } else if (e.key === "End") {
+            video.currentTime = video.duration;
+            e.preventDefault();
+          }
+        });
+      }
+
+      /* ── Volume ── */
+      if (muteBtn) muteBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        video.muted = !video.muted;
+        if (!video.muted && video.volume === 0) video.volume = 0.5;
+        updateVolUI();
+        showControls();
+      });
+      if (volSlider) volSlider.addEventListener("input", function () {
+        video.volume = parseInt(volSlider.value, 10) / 100;
+        video.muted = (video.volume === 0);
+        updateVolUI();
+        showControls();
+      });
+      video.addEventListener("volumechange", updateVolUI);
+
+      /* ── Fullscreen ── */
+      if (fullBtn) fullBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        try {
+          if (document.fullscreenElement) {
+            document.exitFullscreen();
+          } else if (player.requestFullscreen) {
+            player.requestFullscreen();
+          } else if (player.webkitRequestFullscreen) {
+            player.webkitRequestFullscreen();
+          } else if (video.webkitEnterFullscreen) {
+            video.webkitEnterFullscreen();
+          }
+        } catch (err) {}
+      });
+      document.addEventListener("fullscreenchange", function () {
+        var fs = !!document.fullscreenElement;
+        if (iconExpand)   iconExpand.style.display   = fs ? "none" : "block";
+        if (iconCompress) iconCompress.style.display = fs ? "block" : "none";
+      });
+
+      /* ── Auto-hide controls while playing ── */
+      player.addEventListener("mousemove", function () {
+        if (!video.paused) scheduleHide();
+        else showControls();
+      });
+      player.addEventListener("touchstart", function () {
+        if (!video.paused) scheduleHide();
+        else showControls();
+      }, { passive: true });
+
+      /* ── Keep carousel swipe from hijacking control gestures ── */
+      if (controls) {
+        ["touchstart", "touchmove", "touchend"].forEach(function (t) {
+          controls.addEventListener(t, function (e) {
+            e.stopPropagation();
+          }, { passive: true });
+        });
+      }
+
+      /* ── Initial state ── */
+      updatePlayUI();
+      updateVolUI();
+      if (video.readyState >= 1 && video.duration) {
+        durationEl.textContent = fmt(video.duration);
+      }
+    });
+  }
+
+  /* ═══════════════════════════════════════════════════
      INDEX LINK SMOOTH SCROLL
      ═══════════════════════════════════════════════════ */
 
@@ -939,6 +1177,7 @@
     initScienceCards();
     initMobileMenu();
     initCarousels();
+    initCustomVideos();
     initIndexLinks();
     initImageModal();
 
